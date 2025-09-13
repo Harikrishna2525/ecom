@@ -22,10 +22,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Frontend Image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/Ecom:latest .      
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecom:latest .      
 
       - name: Push Frontend Image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/Ecom:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/ecom:latest
      
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -34,7 +34,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/Ecom:latest
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ecom:latest
             cd /home/ubuntu/
             sudo docker-compose down
             sudo docker-compose up -d
